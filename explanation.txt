@@ -1,0 +1,45 @@
+The file kenken.cpp is a C++14 source file that solves ken ken puzzles.
+
+The puzzle description files are formatted as such:
+
+<Board Size (N)>
+<NxN array of chars mapping cells to their clusters' corresponding char>
+<List of all clusters' char ids, cluster type (+,-,*,/), and cluster value>
+
+Cells with a given value should be entered as a single-cell cluster with the
+addition (+) operator and the given cell value as the cluster value.
+
+The program works by:
+
+1. Load the board from a file
+
+2. Calculate all possible combos for each cluster, independent of other
+   clusters.
+
+3. Compare all pairs of clusters' possible combos; when two clusters have
+   overlapping rows or columns and there are combos from one which are
+   impossible for every possible combination in the other cluster, we remove the
+   impossible combination.
+
+4. Repeat step 3 across the entire board as long as it had an effect (combos
+   were removed) on the previous iteration. If it didn't have any effect,
+   proceed to step 5.
+
+5. If the board is still unsolved, compare all sets of 3 clusters. Let's call
+   these clusters A, B, and C.  If A has overlaps with both B and C, and B has
+   overlaps with C, then we check all combos of A, B, and C. If there are combos
+   in any one of these clusters that are invalid with all combinations of the
+   other 2 clusters, then we remove the invalid combos.
+
+6. If reductions have occurred in step 5 and the board is still unsolved, loop
+   back to step 3.
+
+If reductions didn't occur in step 5 and the board isn't solved, the algorithm
+has failed to find a solution. This doesnt necessarily mean that a solution
+doesn't exist. The remainder of the puzzle must be solved via brute force search
+through the remainder of the possible combinations (unimplemented thus far).
+
+
+
+
+
