@@ -2,14 +2,14 @@
 // g++ -o kenken kenken.cpp -std=c++14 -Wall [-O3]
 //
 // Run all tests with:
-// ./kenken test*/*.txt
+// ./kenken test_cases/*.test
 
 
 #include <iostream>
 #include <fstream>
 #include <map>
 
-#include "KenKenBoard.h"
+#include "Board.h"
 
 
 using namespace KenKen;
@@ -28,6 +28,12 @@ int main( int argc, char* argv[] ){
 
         auto B = board::get_from_file( argv[ i ] );
 
+        if( ! B ){
+            std::cerr << "Error reading file `"
+                      << argv[ i ]
+                      << "`. Skipping...\n";
+        }
+
         B-> solve();
 
         if( B-> is_solved() ){
@@ -36,13 +42,14 @@ int main( int argc, char* argv[] ){
             B-> print_solution();
             std::cout << '\n';
 
-        }else{
+        } else {
 
             std::cout << "Failed to solve '" << argv[i] << "'\n\n";
             B-> print_combos();
             std::cout << "\n\n";
 
         }
+
     }
 
 }
